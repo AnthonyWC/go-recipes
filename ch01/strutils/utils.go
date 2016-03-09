@@ -17,12 +17,15 @@ func ToLowerCase(s string) string {
 
 // Returns the string changed to upper case for its first letter.
 func ToFirstUpper(s string) string {
-	if len(s) < 1 {
+	if len(s) < 1 { // if the empty string
 		return s
 	}
+	// Trim the string
 	t := strings.Trim(s, " ")
+	// Convert all letters to lower case
 	t = strings.ToLower(t)
-	a := []rune(t)
-	a[0] = unicode.ToUpper(a[0])
-	return string(a)
+	res := []rune(t)
+	// Convert first letter to upper case
+	res[0] = unicode.ToUpper(res[0])
+	return string(res)
 }
