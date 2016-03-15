@@ -1,3 +1,4 @@
+// Package strutils provides string utility functions
 package strutils
 
 import (
