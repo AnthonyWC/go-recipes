@@ -16,9 +16,9 @@ func main() {
 	http.HandleFunc("/", index)
 
 	server := &http.Server{
-		Addr:           ":8080",
-		ReadTimeout:    30 * time.Second,
-		WriteTimeout:   30 * time.Second,		
+		Addr:         ":8080",
+		ReadTimeout:  60 * time.Second,
+		WriteTimeout: 60 * time.Second,
 	}
 
 	log.Println("Listening...")
