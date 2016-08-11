@@ -23,7 +23,7 @@ type (
 		Location    string        `json:"location"`
 		Priority    int           `json:"priority"` // Priority (1 -5)
 		CreatedBy   string        `json:"createdby"`
-		CreatedOn   time.Time     `json:"createdon"`
-		Tags        []string      `json:"tags"`
+		CreatedOn   time.Time     `json:"createdon,omitempty"`
+		Tags        []string      `json:"tags,omitempty"`
 	}
 )
