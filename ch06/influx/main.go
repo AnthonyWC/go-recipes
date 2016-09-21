@@ -1,4 +1,4 @@
-// Example demo for working with InfluxData
+// Example demo for working with InfluxDB
 package main
 
 import (
@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	// DB provides the database name of the InfluxData
+	// DB provides the database name of the InfluxDB
 	DB       = "metricsdb"
 	username = "opsadmin"
 	password = "pass123"
@@ -60,12 +60,14 @@ func createMetrics(clnt client.Client) {
 	// Batch update to adds Points
 	for i := 0; i < batchCount; i++ {
 		regions := []string{"us-west", "us-central", "us-north", "us-east"}
+		// tagset – “host” and “region”
 		tags := map[string]string{
 			"host":   fmt.Sprintf("192.168.%d.%d", rand.Intn(100), rand.Intn(100)),
 			"region": regions[rand.Intn(len(regions))],
 		}
 
 		value := rand.Float64() * 100.0
+		// field - "cpu_usage"
 		fields := map[string]interface{}{
 			"cpu_usage": value,
 		}
