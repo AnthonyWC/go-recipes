@@ -83,7 +83,7 @@ func getProducts() {
 
 func getProductByID(id int) {
 	var product string
-	err := db.QueryRow("SELECT title FROM products WHERE id=?", id).Scan(&product)
+	err := db.QueryRow("SELECT title FROM products WHERE id=$1", id).Scan(&product)
 	switch {
 	case err == sql.ErrNoRows:
 		log.Printf("No product with that ID.")

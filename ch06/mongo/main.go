@@ -20,7 +20,7 @@ func init() {
 	if err != nil {
 		log.Fatalf("[MongoDB Session]: %s\n", err)
 	}
-	collection := session.DB("bookmarksdb").C("bookmarks")
+	collection := session.DB("bookmarkdb").C("bookmarks")
 	collection.RemoveAll(nil)
 	store = BookmarkStore{
 		C: collection,
