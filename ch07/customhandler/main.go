@@ -29,7 +29,7 @@ func (ih *indexHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		<title>Hello Gopher</title>
 	</head>
 	<body>
-		<b>Hello Gophe!</b>
+		<b>Hello Gopher!</b>
         <p>
           <a href="/welcome">Welcome</a> |  <a href="/message">Message</a>
         </p>
