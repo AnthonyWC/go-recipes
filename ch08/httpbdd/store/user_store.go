@@ -42,10 +42,10 @@ func (store *MongoUserStore) AddUser(user model.User) error {
 	var existUser model.User
 	err := userCol.Find(bson.M{"email": user.Email}).One(&existUser)
 	if err != nil {
-		if err == mgo.ErrNotFound { // Email is unique
+		if err == mgo.ErrNotFound { // Email is unique, no records found
 		}
 	}
-	if (model.User{}) != existUser {
+	if (model.User{}) != existUser { // there is a user
 		return model.ErrorEmailExists
 	}
 	err = userCol.Insert(user)
