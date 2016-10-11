@@ -5,10 +5,10 @@ import (
 	"net"
 	"strings"
 
-	pb "github.com/shijuvar/go-recipes/grpc/customer"
-
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
+
+	pb "github.com/shijuvar/go-recipes/grpc/customer"
 )
 
 const (
