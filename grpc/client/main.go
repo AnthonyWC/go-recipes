@@ -33,6 +33,7 @@ func getCustomers(client pb.CustomerClient, filter *pb.CustomerFilter) {
 		log.Fatalf("Error on get customers: %v", err)
 	}
 	for {
+		// Receiving the stream of data 
 		customer, err := stream.Recv()
 		if err == io.EOF {
 			break
