@@ -1,3 +1,3 @@
 //go:binary-only-package
 
-package utils
+package binarypkg
