@@ -24,6 +24,7 @@ var levels = [...]string{
 	"TRACE",
 	"INFO",
 	"WARNING",
+	"ERROR",
 }
 
 // String returns the string value of level
