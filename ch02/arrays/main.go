@@ -20,6 +20,7 @@ func main() {
 	// Declare and initialize array with array literal
 	y := [5]int{10, 20, 30, 40, 50}
 	fmt.Println("Value of y:", y)
+	fmt.Println("Length of y:", len(y))
 
 	// Array literal with ...
 	z := [...]int{10, 20, 30, 40, 50}
