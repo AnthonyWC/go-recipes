@@ -39,4 +39,12 @@ func main() {
 	} else {
 		fmt.Println("\nKey doesn't exists")
 	}
+	// Passing a map to function doesn't make a copy
+	removeLan(langs, "HI")
+	for k, v := range langs {
+		fmt.Printf("Key: %s Value: %s\n", k, v)
+	}
+}
+func removeLan(langs map[string]string, key string) {
+	delete(langs, key)
 }

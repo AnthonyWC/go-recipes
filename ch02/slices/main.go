@@ -32,5 +32,4 @@ func main() {
 	x1 := []int{10, 20, 30}
 	y1 := append(x1, 40, 50)
 	fmt.Println(x1, y1)
-
 }
