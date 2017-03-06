@@ -76,35 +76,35 @@ func (t Team) PrintTeamDetails() {
 
 func main() {
 	steve := Developer{
-		Employee{
-			"Steve",
-			"John",
-			time.Date(1990, time.February, 17, 0, 0, 0, 0, time.UTC),
-			"Software Engineer",
-			"San Fancisco",
+		Employee: Employee{
+			FirstName: "Steve",
+			LastName:  "John",
+			Dob:       time.Date(1990, time.February, 17, 0, 0, 0, 0, time.UTC),
+			JobTitle:  "Software Engineer",
+			Location:  "San Fancisco",
 		},
-		[]string{"Go", "Docker", "Kubernetes"},
+		Skills: []string{"Go", "Docker", "Kubernetes"},
 	}
 	irene := Developer{
-		Employee{
-			"Irene",
-			"Rose",
-			time.Date(1991, time.January, 13, 0, 0, 0, 0, time.UTC),
-			"Software Engineer",
-			"Santa Clara",
+		Employee: Employee{
+			FirstName: "Irene",
+			LastName:  "Rose",
+			Dob:       time.Date(1991, time.January, 13, 0, 0, 0, 0, time.UTC),
+			JobTitle:  "Software Engineer",
+			Location:  "Santa Clara",
 		},
-		[]string{"Go", "MongoDB"},
+		Skills: []string{"Go", "MongoDB"},
 	}
 	alex := Manager{
-		Employee{
-			"Alex",
-			"Williams",
-			time.Date(1979, time.February, 17, 0, 0, 0, 0, time.UTC),
-			"Program Manger",
-			"Santa Clara",
+		Employee: Employee{
+			FirstName: "Alex",
+			LastName:  "Williams",
+			Dob:       time.Date(1979, time.February, 17, 0, 0, 0, 0, time.UTC),
+			JobTitle:  "Program Manger",
+			Location:  "Santa Clara",
 		},
-		[]string{"CRM", "e-Commerce"},
-		[]string{"San Fancisco", "Santa Clara"},
+		Projects:  []string{"CRM", "e-Commerce"},
+		Locations: []string{"San Fancisco", "Santa Clara"},
 	}
 
 	// Create team

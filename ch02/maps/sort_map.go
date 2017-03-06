@@ -13,6 +13,9 @@ func main() {
 	chapts[1] = "Beginning Go"
 	chapts[2] = "Go Fundamentals"
 	chapts[3] = "Structs and Interfaces"
+	for k, v := range chapts {
+		fmt.Println(k, v)
+	}
 
 	// Slice for specifying the order of the map
 	var keys []int

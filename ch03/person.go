@@ -31,9 +31,9 @@ func main() {
 				// Assign values to fields
 				p.FirstName="Shiju"
 				p.LastName="Varghese"
-				p.Dob= time.Date(1979, time.February, 17, 0, 0, 0, 0, time.UTC),
-				p.Email="shiju@email.com",
-				p.Location= "Kochi",
+				p.Dob= time.Date(1979, time.February, 17, 0, 0, 0, 0, time.UTC)
+				p.Email="shiju@email.com"
+				p.Location= "Kochi"
 
 				// Declare a Person variable and initialize values using Struct literal
 				p := Person{

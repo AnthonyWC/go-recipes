@@ -46,4 +46,10 @@ func main() {
 	for k, v := range langs {
 		fmt.Printf("langs[%d]:%s \n", k, v)
 	}
+	for k := range langs {
+		fmt.Printf("Index:%d \n", k)
+	}
+	for _, v := range langs {
+		fmt.Printf("Value:%s \n", v)
+	}
 }
