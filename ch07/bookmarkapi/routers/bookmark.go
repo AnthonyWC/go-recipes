@@ -2,7 +2,6 @@ package routers
 
 import (
 	"github.com/gorilla/mux"
-	"github.com/urfave/negroni"
 
 	"github.com/shijuvar/go-recipes/ch07/bookmarkapi/common"
 	"github.com/shijuvar/go-recipes/ch07/bookmarkapi/controllers"
@@ -17,9 +16,6 @@ func SetBookmarkRoutes(router *mux.Router) *mux.Router {
 	bookmarkRouter.HandleFunc("/bookmarks/{id}", controllers.GetBookmarkByID).Methods("GET")
 	bookmarkRouter.HandleFunc("/bookmarks/users/{id}", controllers.GetBookmarksByUser).Methods("GET")
 	bookmarkRouter.HandleFunc("/bookmarks/{id}", controllers.DeleteBookmark).Methods("DELETE")
-	router.PathPrefix("/bookmarks").Handler(negroni.New(
-		negroni.HandlerFunc(common.Authorize),
-		negroni.Wrap(bookmarkRouter),
-	))
+	router.PathPrefix("/bookmarks").Handler(common.AuthorizeRequest(bookmarkRouter))
 	return router
 }

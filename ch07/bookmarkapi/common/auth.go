@@ -1,6 +1,7 @@
 package common
 
 import (
+	"context"
 	"crypto/rsa"
 	"errors"
 	"io/ioutil"
@@ -11,7 +12,6 @@ import (
 
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/dgrijalva/jwt-go/request"
-	"github.com/gorilla/context"
 )
 
 // AppClaims provides custom claim for JWT
@@ -65,9 +65,9 @@ func initKeys() {
 func GenerateJWT(name, role string) (string, error) {
 	// Create the Claims
 	claims := AppClaims{
-		name,
-		role,
-		jwt.StandardClaims{
+		UserName: name,
+		Role:     role,
+		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: time.Now().Add(time.Minute * 20).Unix(),
 			Issuer:    "admin",
 		},
@@ -80,8 +80,68 @@ func GenerateJWT(name, role string) (string, error) {
 	return ss, nil
 }
 
-// Authorize Middleware validates JWT tokens if incoming HTTP requests.
-func Authorize(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
+// AuthorizeRequest Middleware validates JWT tokens from incoming HTTP requests.
+func AuthorizeRequest(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		// Get token from request
+		token, err := request.ParseFromRequestWithClaims(r, request.OAuth2Extractor, &AppClaims{}, func(token *jwt.Token) (interface{}, error) {
+			// since we only use the one private key to sign the tokens,
+			// we also only use its public counter part to verify
+			return verifyKey, nil
+		})
+
+		if err != nil {
+			switch err.(type) {
+
+			case *jwt.ValidationError: // JWT validation error
+				vErr := err.(*jwt.ValidationError)
+
+				switch vErr.Errors {
+				case jwt.ValidationErrorExpired: //JWT expired
+					DisplayAppError(
+						w,
+						err,
+						"Access Token is expired, get a new Token",
+						401,
+					)
+					return
+
+				default:
+					DisplayAppError(w,
+						err,
+						"Error while parsing the Access Token!",
+						500,
+					)
+					return
+				}
+
+			default:
+				DisplayAppError(w,
+					err,
+					"Error while parsing Access Token!",
+					500)
+				return
+			}
+
+		}
+		if token.Valid {
+			// Create a Context by setting the user name
+			ctx := context.WithValue(r.Context(), "user", token.Claims.(*AppClaims).UserName)
+			// Calls the next handler by providing the Context
+			next.ServeHTTP(w, r.WithContext(ctx))
+		} else {
+			DisplayAppError(
+				w,
+				err,
+				"Invalid Access Token",
+				401,
+			)
+		}
+	})
+}
+
+// AuthorizeRequestWithNegroni is a Negroni Middleware that validates JWT tokens
+func AuthorizeRequestWithNegroni(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
 
 	// Get token from request
 	token, err := request.ParseFromRequestWithClaims(r, request.OAuth2Extractor, &AppClaims{}, func(token *jwt.Token) (interface{}, error) {
@@ -125,9 +185,8 @@ func Authorize(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
 
 	}
 	if token.Valid {
-		// Set user name to HTTP context
-		context.Set(r, "user", token.Claims.(*AppClaims).UserName)
-		next(w, r)
+		ctx := context.WithValue(r.Context(), "user", token.Claims.(*AppClaims).UserName)
+		next(w, r.WithContext(ctx))
 	} else {
 		DisplayAppError(
 			w,

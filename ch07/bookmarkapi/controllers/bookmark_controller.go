@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/gorilla/context"
 	"github.com/gorilla/mux"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
@@ -37,9 +36,10 @@ func CreateBookmark(w http.ResponseWriter, r *http.Request) {
 	col := dataStore.Collection("bookmarks")
 	// Creates an instance of BookmarkStore
 	bookmarkStore := store.BookmarkStore{C: col}
-	// Takes user name from HTTP context using Gorilla Context
-	if val, ok := context.GetOk(r, "user"); ok {
-		bookmark.CreatedBy = val.(string)
+	// Takes user name from Context
+	user := r.Context().Value("user")
+	if user != nil {
+		bookmark.CreatedBy = user.(string)
 	}
 	// Insert a bookmark document
 	err = bookmarkStore.Create(bookmark)
