@@ -4,8 +4,6 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/urfave/negroni"
-
 	"github.com/shijuvar/go-recipes/ch07/bookmarkapi/common"
 	"github.com/shijuvar/go-recipes/ch07/bookmarkapi/routers"
 )
@@ -17,14 +15,10 @@ func main() {
 	common.StartUp()
 	// Get the mux router object
 	router := routers.InitRoutes()
-	// Create a negroni instance
-	n := negroni.Classic()
-	n.UseHandler(router)
-
 	// Create the Server
 	server := &http.Server{
 		Addr:    common.AppConfig.Server,
-		Handler: n,
+		Handler: router,
 	}
 	log.Println("Listening...")
 	// Running the HTTP Server
